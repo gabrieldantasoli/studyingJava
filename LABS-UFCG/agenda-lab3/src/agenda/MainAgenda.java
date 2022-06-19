@@ -43,7 +43,7 @@ public class MainAgenda {
 	 * @return O comando escolhido.
 	 */
 	private static String menu(Scanner scanner) {
-		System.out.println(
+		System.out.print(
 				"\n---\nMENU\n" + 
 						"(C)adastrar Contato\n" + 
 						"(L)istar Contatos\n" + 
@@ -76,7 +76,7 @@ public class MainAgenda {
 			sai();
 			break;
 		default:
-			System.out.println("Opção inválida!");
+			System.out.println("OPÇÃO INVÁLIDA!");
 		}
 	}
 
@@ -128,13 +128,17 @@ public class MainAgenda {
 	private static void cadastraContato(Agenda agenda, Scanner scanner) {
 		System.out.print("\nPosição na agenda> ");
 		int posicao = scanner.nextInt();
-		System.out.print("\nNome> ");
-		String nome = scanner.next();
-		System.out.print("\nSobrenome> ");
-		String sobrenome = scanner.next();
-		System.out.print("\nTelefone> ");
-		String telefone = scanner.next();
-		agenda.cadastraContato(posicao, nome, sobrenome, telefone);
+		if (posicao >= 1 && posicao <= 100) {
+			System.out.print("\nNome> ");
+			String nome = scanner.next();
+			System.out.print("\nSobrenome> ");
+			String sobrenome = scanner.next();
+			System.out.print("\nTelefone> ");
+			String telefone = scanner.next();
+			agenda.cadastraContato(posicao - 1, nome, sobrenome, telefone);
+		}else {
+			System.out.println("POSIÇÃO INVÁLIDA!");
+		}
 	}
 
 	/**
