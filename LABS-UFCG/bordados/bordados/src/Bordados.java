@@ -3,14 +3,14 @@ package bordados.src;
 public class Bordados {
     private int podeCadastrar = 10;
     private Coletania coletania;
-    Bordado[] bordados;
+    private Bordado[] bordados;
 
     public Bordados() {
         this.bordados = new Bordado[10];
         this.coletania = new Coletania();
     }
 
-    public void cadastrarBordados(int position,int linhas,int colunas) {
+    public void cadastrarBordados(int position     ,int linhas,int colunas) {
         bordados[position] = new Bordado(linhas,colunas);
         this.podeCadastrar -= 1;
     }
@@ -20,16 +20,16 @@ public class Bordados {
     }
 
     public void imprimirBordado(int position) {
-        this.bordados[position].imprimirBordado();
-    }
+        this.bordados[position].imprimirBordado();                                    
+    }                                          
 
     public void listarBordados() {
         for (int a = 0; a < this.bordados.length; a++) {
             if (this.bordados[a] != null) {
                 this.bordados[a].listarBordado(a);
             }
-        }
-    }
+        }                                                    
+    }                                                                                                
 
     public int getCadastrosRestantes() {
         return this.podeCadastrar;
@@ -46,8 +46,8 @@ public class Bordados {
             return false;
         }
         return true;
-    }
-
+    }                                                            
+ 
     public void cadastrarBordadosEmColetania (int coletanea,int total,int[] index) {
         Bordado[] array = new Bordado[total];
         for (int a = 0; a < total; a++) {

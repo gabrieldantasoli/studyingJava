@@ -117,7 +117,7 @@ public class Main {
         return true;
     }
 
-    public static void imprimirBordado(Scanner scanner,Bordados bordados) {
+    private static void imprimirBordado(Scanner scanner,Bordados bordados) {
         System.out.println("Bordado a ser impresso? ");
         int position = scanner.nextInt();
         if (position >= 0 && position <= 9) {

@@ -32,7 +32,7 @@ public class Bordado {
 
         for (int a = 0; a < this.pontos.length; a++) {
             System.out.print("|");
-            for (int b = 0; b < this.pontos[a].length; b++) {
+            for (int b = 0; b < this.pontos[a].length; b++) {                                                         
                 System.out.print(this.pontos[a][b]);
             }
             System.out.printf("|%n");
