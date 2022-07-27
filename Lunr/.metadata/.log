@@ -1,4 +1,4 @@
-!SESSION 2022-07-20 09:07:35.529 -----------------------------------------------
+!SESSION 2022-07-27 08:08:06.405 -----------------------------------------------
 eclipse.buildId=4.23.0.I20220308-0310
 java.version=17.0.2
 java.vendor=Eclipse Adoptium
@@ -6,15 +6,15 @@ BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
 Framework arguments:  -product org.eclipse.epp.package.jee.product
 Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.jee.product
 
-!ENTRY org.eclipse.jface 2 0 2022-07-20 09:07:58.961
+!ENTRY org.eclipse.jface 2 0 2022-07-27 08:10:02.964
 !MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
-!SUBENTRY 1 org.eclipse.jface 2 0 2022-07-20 09:07:58.962
+!SUBENTRY 1 org.eclipse.jface 2 0 2022-07-27 08:10:02.964
 !MESSAGE A conflict occurred for CTRL+SHIFT+T:
 Binding(CTRL+SHIFT+T,
 	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
 		Open a type in a Java editor,
 		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@106f0051,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@3203ffa3,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -22,17 +22,17 @@ Binding(CTRL+SHIFT+T,
 	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
 		,
 		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4fe687b5,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@49231d79,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2022-07-20 09:07:58.962
+!SUBENTRY 1 org.eclipse.jface 2 0 2022-07-27 08:10:02.964
 !MESSAGE A conflict occurred for ALT+SHIFT+R:
 Binding(ALT+SHIFT+R,
 	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.rename.element,Rename - Refactoring ,
 		Rename the selected element,
 		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@7a02d760,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@25f67aea,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -40,13 +40,13 @@ Binding(ALT+SHIFT+R,
 	ParameterizedCommand(Command(org.eclipse.ui.edit.rename,Rename,
 		Rename the selected item,
 		Category(org.eclipse.ui.category.file,File,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5a86112a,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4f93303f,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
 
-!ENTRY org.eclipse.ui.navigator 2 0 2022-07-20 09:08:04.856
+!ENTRY org.eclipse.ui.navigator 2 0 2022-07-27 08:10:13.403
 !MESSAGE Can't find Navigator Content Descriptor with id: org.eclipse.jst.servlet.ui.EnhancedJavaRendering
 
-!ENTRY org.eclipse.ui.navigator 2 0 2022-07-20 09:08:04.856
+!ENTRY org.eclipse.ui.navigator 2 0 2022-07-27 08:10:13.405
 !MESSAGE Can't find Navigator Content Descriptor with id: org.eclipse.jst.servlet.ui.EnhancedJavaRendering

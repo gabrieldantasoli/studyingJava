@@ -57,7 +57,16 @@ public class BuscaController {
 	 * @return Array com DocumentoDTO. Não há ordenação definida.
 	 */
 	public DocumentoDTO[] busca(Map<String, String> metadados) {
-		// TODO
+		// busca avancada aqui
+		
+		/*
+		 * Na busca avançada os documentos são procurados a partir dos seus metadados. 
+		 * O subsistema de busca deve receber um mapa de metadados a serem pesquisados. 
+		 * Exemplos de entradas desse mapa: : <"TIPO", "txt"> e <"LINHAS", "1">. 
+		 * A busca avançada deve selecionar TODOS os documentos que tenham TODOS OS METADADOS indicados.
+		 *  Não é necessário ordenar os resultados retornados, nem limitar a quantidade de respostas.
+		 */
+		
 		throw new UnsupportedOperationException("TODO");
 	}
 

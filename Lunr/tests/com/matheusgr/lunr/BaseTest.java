@@ -16,7 +16,7 @@ class BaseTest {
 	
 	protected DocumentoController documentoController;
 	protected BuscaController buscaController;
-	protected SimilaridadeController similaridadeController; 
+	protected SimilaridadeController similaridadeController;
 	protected ApresentacaoController apresentacaoController;
 
 	@BeforeEach
