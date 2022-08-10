@@ -2,56 +2,37 @@ package sapo;
 
 public class Facade {
 	
-	/*
-	 *private PessoaController pessoaController;
-
-    // … demais controllers
-
-    public Facade() {
-
-        this.pessoaController = new PessoaController();
-
-        // … demais controllers
-
-    }
-
-    public void cadastrarPessoa(String cpf, String nome, String[] habilidades) {
-
-        this.pessoaController.cadastrarPessoa(cpf, nome, habilidades)
-
-    }
-
-    // demais métodos …
-	 */
+	private PessoaController pessoaControler ;
 	
+	public Facade() {
+		this.pessoaControler = new PessoaController();
+	}
 	
 	public void cadastrarPessoa(String cpf, String nome, String[] habilidades) {
-		
+		this.pessoaControler.cadastrarPessoa(cpf, nome, habilidades);
 	}
 	
 	public void exibirPessoa(String cpf) {
-		
+		this.pessoaControler.exibirPessoa(cpf);
 	}
 	
 	public void alterarNomePessoa(String cpf, String novoNome) {
-		
+		this.pessoaControler.alterarNomePessoa(cpf, novoNome);
 	}
 	
 	public void alterarHabilidadesPessoa(String cpf, String[] novasHabilidades) {
-		
+		this.pessoaControler.alterarHabilidadesPessoa(cpf, novasHabilidades);
 	}
 	
 	public void removerPessoa(String cpf) {
-		
+		this.pessoaControler.removerPessoa(cpf);
 	}
+	
 	public void adicionarComentarioPessoa(String cpf, String comentario, String autorCpf) {
-		
+		this.pessoaControler.adicionarComentarioPessoa(cpf, comentario, autorCpf);
 	}
 	
 	public String listarComentariosPessoa(String cpf) {
-		return "1";
+		return this.pessoaControler.listarComentariosPessoa(cpf);
 	}
-
-   
-
 }

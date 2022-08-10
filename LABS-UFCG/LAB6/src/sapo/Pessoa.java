@@ -1,16 +1,18 @@
 package sapo;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class Pessoa {
 	private String cpf;
 	private String nome;
 	private String[] habilidades;
-	private ArrayList<Comentario> comentarios;
+	private HashMap<String, Comentario> comentarios;
 	
 	public Pessoa(String cpf, String nome, String[] habilidades) {
 		checkAtributo(cpf);
 		checkAtributo(nome);
+		this.comentarios = new HashMap<String, Comentario>();
 		
 		this.cpf = cpf;
 		this.nome = nome;
@@ -20,6 +22,7 @@ public class Pessoa {
 	public boolean alterarNome(String novoNome) {
 		checkAtributo(novoNome);
 		this.nome = novoNome;
+		
 		return true;
 	}
 	
@@ -33,7 +36,15 @@ public class Pessoa {
 		checkAtributo(cpfAutor);
 		
 		Comentario comentario = new Comentario(descricao, cpfAutor);
-		this.comentarios.add(comentario);
+		this.comentarios.put(cpfAutor, comentario);
+	}
+	
+	public void removerComentarios(String cpfAutor) {
+		for(Entry<String, Comentario> entry: this.comentarios.entrySet()) {
+			if (entry.getKey().equals(cpfAutor)) {
+				this.comentarios.remove(cpfAutor);
+			}
+        }
 	}
 	
 	public String listarComentarios() {
@@ -43,6 +54,12 @@ public class Pessoa {
 		for (int index = 0; index < this.comentarios.size(); index++) {
 			// pegar o nome da pessoa
 			exibicao += "-- " + this.comentarios.get(index) + "Nome da pessoa" + "\n";
+		}
+		
+		for(Entry<String, Comentario> entry: this.comentarios.entrySet()) {
+			// pegar o nome da pessoa -> info[1] = cpf
+			String[] info = entry.getValue().getInfo();
+			exibicao += "-- " + this.comentarios.get(info[0]) + "(" + "Nome da pessoa" + ")" + "\n";
 		}
 		
 		return exibicao;
@@ -55,6 +72,7 @@ public class Pessoa {
 		for (String habilidade : this.habilidades) {
 			exibicao += "- " + habilidade + "\n";
 		}
+		
 		return exibicao;
 	}
 	
@@ -62,6 +80,7 @@ public class Pessoa {
 		if (nome.trim().equals("")) {
 			throw new IllegalArgumentException("O/A " + atributo.toUpperCase() + " da pessoa não pode ser vazio!");
 		}
+		
 		return true;
 	}
 	
