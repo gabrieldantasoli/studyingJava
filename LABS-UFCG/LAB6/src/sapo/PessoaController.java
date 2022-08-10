@@ -33,11 +33,11 @@ public class PessoaController {
 	
 	public void adicionarComentarioPessoa(String cpf, String comentario, String autorCpf) {
 		Pessoa pessoa = pr.getPessoa(cpf);
-		pessoa.AdicionarComentario(comentario, autorCpf);
+		pessoa.AdicionarComentario(pr.getPessoas(), comentario, autorCpf);
 	}
 	
 	public String listarComentariosPessoa(String cpf) {
 		Pessoa pessoa = pr.getPessoa(cpf);
-		return pessoa.listarComentarios();
+		return pessoa.listarComentarios(pr.getPessoas());
 	}
 }

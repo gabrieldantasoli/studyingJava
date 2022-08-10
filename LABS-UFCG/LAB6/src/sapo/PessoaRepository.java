@@ -40,4 +40,8 @@ public class PessoaRepository {
         }
 		throw new NoSuchElementException("Pessoa não encontrada no banco de dados!");
 	}
+	
+	public HashMap<String, Pessoa> getPessoas() {
+		return this.pessoas;
+	}
 }

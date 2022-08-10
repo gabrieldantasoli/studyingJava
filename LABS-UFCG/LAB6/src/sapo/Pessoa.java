@@ -1,6 +1,7 @@
 package sapo;
 
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Map.Entry;
 
 public class Pessoa {
@@ -30,8 +31,19 @@ public class Pessoa {
 		this.habilidades = novasHabilidades;
 	}
 	
-	public void AdicionarComentario(String descricao, String cpfAutor) {
-		// checar se a pessoa existe
+	public void AdicionarComentario(HashMap<String, Pessoa> pessoas, String descricao, String cpfAutor) {
+		boolean encontrado = false;
+		for(Entry<String, Pessoa> entry: pessoas.entrySet()) {
+			if (entry.getKey().equals(cpfAutor)) {
+				encontrado = true;
+				break;
+			}
+        }
+		
+		if (!encontrado) {
+			throw new NoSuchElementException("CPF do autor não encontrada no banco de dados!");
+		}
+		
 		checkAtributo(descricao);
 		checkAtributo(cpfAutor);
 		
@@ -47,19 +59,13 @@ public class Pessoa {
         }
 	}
 	
-	public String listarComentarios() {
+	public String listarComentarios(HashMap<String, Pessoa> pessoas) {
 		String exibicao = "";
 		exibicao += this.nome + " - " + this.cpf + "\n";
 		exibicao += "Comentários:\n";
-		for (int index = 0; index < this.comentarios.size(); index++) {
-			// pegar o nome da pessoa
-			exibicao += "-- " + this.comentarios.get(index) + "Nome da pessoa" + "\n";
-		}
-		
 		for(Entry<String, Comentario> entry: this.comentarios.entrySet()) {
-			// pegar o nome da pessoa -> info[1] = cpf
 			String[] info = entry.getValue().getInfo();
-			exibicao += "-- " + this.comentarios.get(info[0]) + "(" + "Nome da pessoa" + ")" + "\n";
+			exibicao += "-- " + this.comentarios.get(info[0]) + "(" + pessoas.get(entry.getKey()).getNome() + ")" + "\n";
 		}
 		
 		return exibicao;
@@ -77,11 +83,15 @@ public class Pessoa {
 	}
 	
 	private boolean checkAtributo(String atributo) {
-		if (nome.trim().equals("")) {
+		if (atributo.trim().equals("")) {
 			throw new IllegalArgumentException("O/A " + atributo.toUpperCase() + " da pessoa não pode ser vazio!");
 		}
 		
 		return true;
+	}
+	
+	public String getNome() {
+		return this.nome;
 	}
 	
 }
