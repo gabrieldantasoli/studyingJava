@@ -11,8 +11,8 @@ public class Pessoa {
 	private HashMap<String, Comentario> comentarios;
 	
 	public Pessoa(String cpf, String nome, String[] habilidades) {
-		checkAtributo(cpf);
-		checkAtributo(nome);
+		checkAtributo(cpf,"cpf");
+		checkAtributo(nome,"nome");
 		this.comentarios = new HashMap<String, Comentario>();
 		
 		this.cpf = cpf;
@@ -21,9 +21,8 @@ public class Pessoa {
 	}
 	
 	public boolean alterarNome(String novoNome) {
-		checkAtributo(novoNome);
+		checkAtributo(novoNome,"novo nome");
 		this.nome = novoNome;
-		
 		return true;
 	}
 	
@@ -44,8 +43,8 @@ public class Pessoa {
 			throw new NoSuchElementException("CPF do autor não encontrada no banco de dados!");
 		}
 		
-		checkAtributo(descricao);
-		checkAtributo(cpfAutor);
+		checkAtributo(descricao,"descrição");
+		checkAtributo(cpfAutor,"cpf do autor");
 		
 		Comentario comentario = new Comentario(descricao, cpfAutor);
 		this.comentarios.put(cpfAutor, comentario);
@@ -82,9 +81,9 @@ public class Pessoa {
 		return exibicao;
 	}
 	
-	private boolean checkAtributo(String atributo) {
+	private boolean checkAtributo(String atributo, String nomeAtributo) {
 		if (atributo.trim().equals("")) {
-			throw new IllegalArgumentException("O/A " + atributo.toUpperCase() + " da pessoa não pode ser vazio!");
+			throw new IllegalArgumentException("O/A " + nomeAtributo.toUpperCase() + " da pessoa não pode ser vazio!");
 		}
 		
 		return true;

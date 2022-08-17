@@ -12,12 +12,12 @@ public class AtividadeRepository {
 	}
 	
 	public void cadastrarAtividade(String id, Atividade atividade) {
-		this.atividades.put(id, atividade);
+		this.atividades.put(id, atividade); 
 	}
 	
 	public int numeroAttCadastradas() {
 		return this.atividades.size();
-	}
+	} 
 	
 	public Atividade getAtividade(String id) {
 		for(Entry<String, Atividade> entry: this.atividades.entrySet()) {

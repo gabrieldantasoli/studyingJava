@@ -1,5 +1,8 @@
 package sapo;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 public class Atividade {
 	private String nome;
 	private String descricao;
@@ -7,10 +10,11 @@ public class Atividade {
 	private String codigoAtt;
 	private String status;
 	
+	
 	public Atividade(String nome, String descricao, String cpf, int attIndex) {
-		checkAtributo(nome);
-		checkAtributo(descricao);
-		checkAtributo(cpf);
+		checkAtributo(nome,"nome");
+		checkAtributo(descricao,"descrição"); 
+		checkAtributo(cpf,"cpf");
 		this.nome = nome;
 		this.descricao = descricao;
 		this.cpfResponsavel = cpf;
@@ -22,7 +26,7 @@ public class Atividade {
 		if (this.status == "aberta") {
 			this.status = "encerrada";
 		}else {
-			throw new IllegalArgumentException("A tarefa já estava aberta !");
+			throw new IllegalArgumentException("A tarefa não está aberta !");
 		}
 	}
 
@@ -30,7 +34,7 @@ public class Atividade {
 		if (this.status == "aberta") {
 			this.status = "desativada";
 		}else {
-			throw new IllegalArgumentException("A tarefa já estava aberta !");
+			throw new IllegalArgumentException("A tarefa não está aberta !");
 		}
 	}
 
@@ -42,24 +46,28 @@ public class Atividade {
 		}
 	}
 
-	@Override
-	public String toString() {
+	public String toString(HashMap<String, Tarefa> tarefas) {
 		String sobreAtt = "";
 		sobreAtt += this.codigoAtt + this.nome + "/n";
 		if (this.cpfResponsavel != null) {
 			sobreAtt += "Responsável: " + "nome do responsavel" + " - " + this.cpfResponsavel + "/n";
 		}
-		
-		sobreAtt += "===/n" + this.descricao + "/n===/n";
-		
-		//adicionar tarefas em toString
-		/*
-		 * Tarefas: 6/20
-		 * - Fazer apresentação sobre atributos e métodos - STD-0-20
-		   - Preparar material de estudo - STD-0-15
-		   - Revisar questões da prova - STD-0-10
-		 */
-		
+		sobreAtt += "===/n" + this.descricao + "/n===/n"; 
+		int tarefasRealisadas = 0;
+		for(Entry<String, Tarefa> entry: tarefas.entrySet()) {
+			if (entry.getValue().getStatus().equals("concluida")) {
+				tarefasRealisadas += 1;
+			}
+        }
+		sobreAtt += "Tarefas: " + tarefasRealisadas + "/" + tarefas.size() + "/";
+		int total = 0;
+		for(Entry<String, Tarefa> entry: tarefas.entrySet()) {
+			if (!entry.getValue().getStatus().equals("concluida")) {
+				sobreAtt += "- " + entry.getValue().getNome() + entry.getKey();
+				total += 1;
+				if (total == 3) break;
+			}
+		}
 		return sobreAtt;
 	}
 
@@ -74,7 +82,15 @@ public class Atividade {
 	public String getCodigo() {
 		return this.codigoAtt;
 	}
-
+	
+	public String getNome() {
+		return this.nome;
+	}
+	
+	public String getStatus() {
+		return this.status;
+	}
+	
 	private String gerarCodigo(String nome) {
 		nome = nome.toUpperCase();
 		String codigo = "";
@@ -82,8 +98,8 @@ public class Atividade {
 		int letras = 0;
 		for (int index = 0; index < nome.length(); index++) {
 			String letra = nome.substring(index, index + 1);
-			if ("AEIOU".contains(letra)) {
-				letras += 1;
+			if (!"AEIOU".contains(letra)) {
+				letras += 1; 
 				codigo += letra;
 				if (letras == 3) break;
 			}
@@ -96,9 +112,9 @@ public class Atividade {
 		return codigo;
 	}
 	
-	private boolean checkAtributo(String atributo) {
+	private boolean checkAtributo(String atributo, String nomeAtributo) {
 		if (atributo.trim().equals("")) {
-			throw new IllegalArgumentException("O/A " + atributo.toUpperCase() + " não pode ser vazio(a)!");
+			throw new IllegalArgumentException("O/A " + nomeAtributo.toUpperCase() + " da pessoa não pode ser vazio!");
 		}
 		
 		return true;
