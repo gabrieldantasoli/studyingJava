@@ -1,20 +1,35 @@
 package sapo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Map.Entry;
 
 public class TarefaRepository {
 	private HashMap<String, HashMap<String, Tarefa>> tarefas;
+	private ArrayList atividades;
 	
 	public TarefaRepository() {
 		this.tarefas = new HashMap<String, HashMap<String, Tarefa>>(); 
+		this.atividades = new ArrayList<>();
 	} 
+	
+	public void adicionarAtividade(String codigo) {
+		this.atividades.add(codigo);
+	}
 	
 	public String cadastrarTarefa(String codigo, Tarefa tarefa) {
 		checaAtividade(codigo);
-		checaExisteTarefa(codigo, codigo + "-" + this.tarefas.get(codigo).size());
-		this.tarefas.get(codigo).put(codigo + "-" + this.tarefas.get(codigo).size(), tarefa);
+		if (this.tarefas.containsKey(codigo)) {
+			checaExisteTarefa(codigo, codigo + "-" + this.tarefas.get(codigo).size());
+		}
+		if (this.tarefas.containsKey(codigo)) {
+			this.tarefas.get(codigo).put(codigo + "-" + this.tarefas.get(codigo).size(), tarefa);
+		}else {
+			HashMap novaAtt = new HashMap<String, Tarefa>();
+			novaAtt.put(codigo + "-" + "0", tarefa);
+			this.tarefas.put(codigo, novaAtt);
+		}
 		return codigo + "-" + (this.tarefas.get(codigo).size() - 1);
 	}
 	
@@ -36,6 +51,9 @@ public class TarefaRepository {
 	}
 	
 	public int getQtdAtividades(String codigo) {
+		if (!this.tarefas.containsKey(codigo)) {
+			return 0;
+		}
 		return this.tarefas.get(codigo).size();
 	}
 	
@@ -50,22 +68,46 @@ public class TarefaRepository {
 		if (this.tarefas.get(codigo1.substring(0, codigo1.length() -2)).containsKey(codigo1) == true) {
 			return true;
 		}
-		throw new NoSuchElementException("A Tarefa não existe!");
+		throw new NoSuchElementException("A Tarefa já existe!");
 	}
 	
 	private boolean checaAtividade(String codigo1) {
-		if (this.tarefas.containsKey(codigo1) == false) {
-			throw new NoSuchElementException("A atividade não existe!");
-		}
-		return this.tarefas.containsKey(codigo1);
+		if (this.atividades.contains(codigo1)) return true;
+		throw new NoSuchElementException("A atividade não existe!");
 	}
 	
 	public boolean checkTarefasPendentes(String codigo) {
-		for(Entry<String, Tarefa> entry: this.tarefas.get(codigo).entrySet()) {
-			if (!entry.getValue().getStatus().equals("concluida")) {
-				return true;
+		if (this.tarefas.containsKey(codigo)) {
+			for(Entry<String, Tarefa> entry: this.tarefas.get(codigo).entrySet()) {
+				if (entry.getValue().getStatus().equals("aberta")) {
+					return true; 
+				}
 			}
-		}
+		} 
 		return false;
 	}
+	
+	public HashMap<String, ArrayList<String>> getMetadados() {
+		HashMap<String, ArrayList<String>> dados = new HashMap<String, ArrayList<String>>();
+		
+		for(Entry<String, HashMap<String, Tarefa>> entry: this.tarefas.entrySet()) {
+			ArrayList<String> keys = new ArrayList<String>();
+			for(Entry<String, Tarefa> entry1: entry.getValue().entrySet()) {
+				keys.add(entry1.getKey());
+			} 
+			dados.put(entry.getKey(), keys);
+		}
+		return dados;
+	}
+	
+	public HashMap<String, String[]> getMetadadosHabilidades() {
+		HashMap<String, String[]> habilidades = new HashMap<String, String[]>();
+		for(Entry<String, HashMap<String, Tarefa>> entry: this.tarefas.entrySet()) {
+			for(Entry<String, Tarefa> entry1: entry.getValue().entrySet()) {
+				habilidades.put(entry1.getKey(), entry1.getValue().getHabilidades());
+			}
+		}
+		return habilidades;
+	}
+	
 }

@@ -21,6 +21,7 @@ public class Tarefa {
 		this.codigoTarefa = codigo;
 		this.status = "aberta";
 		this.descricao = descricao;
+		this.duracao = 0;
 	}
 	
 	public void alterarNomeTarefa(String nome) {
@@ -52,17 +53,17 @@ public class Tarefa {
 	
 	public String toString(HashMap<String, Pessoa> pessoas) {
 		String exibicao = "";
-		exibicao += this.nome + " - " + this.codigoTarefa + "/n- " + this.descricao + "/n";
+		exibicao += this.nome + " - " + this.codigoTarefa + "\n- " + this.descricao + "\n";
 		for (int index = 0; index < this.habilidades.length; index++) {
 			exibicao += this.habilidades[index];
 			if (index < this.habilidades.length - 1) {
 				exibicao += ", ";
 			}
 		}
-		exibicao += "/n(" + this.duracao + "hora(s) executada(s))" + "/n===/nEquipe:/n";
+		exibicao += "\n(" + this.duracao + " hora(s) executada(s))" + "\n===\nEquipe:\n";
 		
 		for(Entry<String, Pessoa> entry: pessoas.entrySet()) {
-			exibicao += entry.getValue().getNome() + " - " + entry.getValue() + "/n";
+			exibicao += entry.getValue().getNome() + " - " + entry.getValue().getCPF() + "\n";
         }
 		
 		return exibicao;
@@ -82,11 +83,20 @@ public class Tarefa {
 	}
 	
 	public String getStatus() {
-		return this.getStatus();
+		return this.status;
 	}
 	
 	public String getNome() {
 		return this.nome;
+	}
+	
+	public String[] getHabilidades() {
+		String[] habilidades = new String[this.habilidades.length+1];
+		for (int index = 0; index < this.habilidades.length; index++) {
+			habilidades[index] = this.habilidades[index];
+		}
+		habilidades[habilidades.length-1] = "" + this.pessoasAssociadas.size();
+		return habilidades;
 	}
 	
 	private boolean checkPessoaAssociada(String cpf) {
@@ -106,7 +116,7 @@ public class Tarefa {
 	
 	private void checkCanRemove(int horas) {
 		if (this.duracao - horas < 0) {
-			throw new IllegalArgumentException("Ação inválida : A tempo passado não pode ser menor que o tempo total da atividade!");
+			throw new IllegalArgumentException("Ação inválida : O tempo passado não pode ser menor que o tempo total da atividade!");
 		}
 	}
 	

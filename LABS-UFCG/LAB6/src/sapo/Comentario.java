@@ -25,7 +25,6 @@ public class Comentario {
 		if (atributo.trim().equals("")) {
 			throw new IllegalArgumentException("O/A " + atributo.toUpperCase() + " não pode ser vazio!");
 		}
-		
 		return true;
 	}
 }

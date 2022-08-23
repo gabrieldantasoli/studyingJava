@@ -1,5 +1,6 @@
 package sapo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -43,5 +44,13 @@ public class PessoaRepository {
 	
 	public HashMap<String, Pessoa> getPessoas() {
 		return this.pessoas;
+	}
+	
+	public HashMap<String, ArrayList<String>> getMetadados() {
+		HashMap<String, ArrayList<String>> metadados = new HashMap<String, ArrayList<String>>();
+		for(Entry<String, Pessoa> entry: this.pessoas.entrySet()) {
+			metadados.put(entry.getKey(), entry.getValue().getMetadados());
+        }
+		return metadados;
 	}
 }

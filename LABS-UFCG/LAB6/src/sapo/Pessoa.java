@@ -1,5 +1,6 @@
 package sapo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Map.Entry;
@@ -43,7 +44,7 @@ public class Pessoa {
 			throw new NoSuchElementException("CPF do autor não encontrada no banco de dados!");
 		}
 		
-		checkAtributo(descricao,"descrição");
+		checkAtributo(descricao,"comentario");
 		checkAtributo(cpfAutor,"cpf do autor");
 		
 		Comentario comentario = new Comentario(descricao, cpfAutor);
@@ -64,10 +65,14 @@ public class Pessoa {
 		exibicao += "Comentários:\n";
 		for(Entry<String, Comentario> entry: this.comentarios.entrySet()) {
 			String[] info = entry.getValue().getInfo();
-			exibicao += "-- " + this.comentarios.get(info[0]) + "(" + pessoas.get(entry.getKey()).getNome() + ")" + "\n";
+			exibicao += "-- " + this.comentarios.get(pessoas.get(entry.getKey()).getCPF()).getInfo()[0] + " (" + pessoas.get(entry.getKey()).getNome() + ")" + "\n";
 		}
 		
 		return exibicao;
+	}
+	
+	public String getCPF() {
+		return this.cpf;
 	}
 	
 	@Override
@@ -77,7 +82,6 @@ public class Pessoa {
 		for (String habilidade : this.habilidades) {
 			exibicao += "- " + habilidade + "\n";
 		}
-		
 		return exibicao;
 	}
 	
@@ -85,7 +89,6 @@ public class Pessoa {
 		if (atributo.trim().equals("")) {
 			throw new IllegalArgumentException("O/A " + nomeAtributo.toUpperCase() + " da pessoa não pode ser vazio!");
 		}
-		
 		return true;
 	}
 	
@@ -93,4 +96,17 @@ public class Pessoa {
 		return this.nome;
 	}
 	
+	public ArrayList<String> getMetadados() {
+		ArrayList<String> metadados = new ArrayList<String>();
+		metadados.add(this.nome.toLowerCase());
+		metadados.add(this.cpf.toLowerCase());
+		for (String str : this.habilidades) {
+			metadados.add(str.toLowerCase());
+		}
+		return metadados;
+	}
+	
+	public String[] getHabilidades() {
+		return this.habilidades;
+	}
 }

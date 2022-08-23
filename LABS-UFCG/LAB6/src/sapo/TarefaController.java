@@ -1,5 +1,6 @@
 package sapo;
 
+import java.util.ArrayList;
 import java.util.HashMap; 
 
 public class TarefaController {
@@ -28,7 +29,7 @@ public class TarefaController {
 	}
 	
 	public void removerHorasTarefa(String idTarefa, int horas) {
-		this.tarefaRepository.getTarefa(idTarefa).adicionarHorasTarefa(horas);
+		this.tarefaRepository.getTarefa(idTarefa).removerHorasTarefa(horas);
 	}
 	
 	public void concluirTarefa(String idTarefa) {
@@ -57,5 +58,17 @@ public class TarefaController {
 	
 	public HashMap<String, Tarefa> getTarefas(String id) {
 		return this.tarefaRepository.getTarefas(id);
+	}
+	
+	public void adicionarAtividade(String codigo) {
+		this.tarefaRepository.adicionarAtividade(codigo);
+	}
+	
+	public HashMap<String, ArrayList<String>> getMetadados() {
+		return this.tarefaRepository.getMetadados();
+	}
+	
+	public HashMap<String, String[]> getMetadadosHabilidades() {
+		return this.tarefaRepository.getMetadadosHabilidades();
 	}
 }

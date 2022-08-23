@@ -1,5 +1,6 @@
 package sapo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PessoaController {
@@ -45,5 +46,13 @@ public class PessoaController {
 	
 	public HashMap<String, Pessoa> getPessoas() {
 		return this.pr.getPessoas();
+	}
+	
+	public Pessoa getPessoa(String cpf) {
+		return this.pr.getPessoa(cpf);
+	}
+	
+	public HashMap<String, ArrayList<String>> getMetadadosPessoas() {
+		return this.pr.getMetadados();
 	}
 }

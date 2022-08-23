@@ -1,15 +1,22 @@
 package sapo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Facade {
 	
 	private PessoaController pessoaControler ;
 	private AtividadeController atividadeControler;
 	private TarefaController tarefaController;
+	private Buscas buscar;
+	private String[] x;
 	
 	public Facade() {
 		this.pessoaControler = new PessoaController();
 		this.atividadeControler = new AtividadeController(); 
 		this.tarefaController = new TarefaController();
+		this.buscar = new Buscas();
+		this.x= new String[3];
 	}
 	
 	// Métodos para as classes relacionadas a pessoas começam aqui. 
@@ -18,8 +25,8 @@ public class Facade {
 		this.pessoaControler.cadastrarPessoa(cpf, nome, habilidades);
 	}
 	
-	public void exibirPessoa(String cpf) {
-		this.pessoaControler.exibirPessoa(cpf); 
+	public String exibirPessoa(String cpf) {
+		return this.pessoaControler.exibirPessoa(cpf); 
 	}
 	
 	public void alterarNomePessoa(String cpf, String novoNome) {
@@ -47,19 +54,26 @@ public class Facade {
 	// Métodos para as classes relacionadas a Atividades começam aqui. 
 	
 	public String cadastrarAtividade(String nome, String descricao, String cpf) {
+		this.pessoaControler.exibirPessoa(cpf);
 		String codigo = this.atividadeControler.cadastrarAtividade(nome, descricao, cpf);
+		this.tarefaController.adicionarAtividade(codigo);
 		return codigo;
 	}
 		
 	public void encerrarAtividade(String atividadeId) {
 		if (this.tarefaController.checkTarefasPendentes(atividadeId) == false) {
-			this.atividadeControler.encerrarAtividade(atividadeId); 
+			this.atividadeControler.encerrarAtividade(atividadeId);
+		}else {
+			throw new IllegalStateException("A atividade tem tarefas Pendentes!");
 		}
+		
 	}
 
 	public void desativarAtividade(String atividadeId) {
 		if (this.tarefaController.checkTarefasPendentes(atividadeId) == false) {
 			this.atividadeControler.desativarAtividade(atividadeId);
+		}else {
+			throw new IllegalStateException("A atividade tem tarefas Pendentes!");
 		}
 	}
 
@@ -68,8 +82,15 @@ public class Facade {
 	}
 
 	public String exibirAtividade(String atividadeId) {
-		String atividade = this.atividadeControler.exibirAtividade(atividadeId,this.tarefaController.getTarefas(atividadeId));
-		return atividade;
+		String nome;
+		if (!this.atividadeControler.getResponsavel(atividadeId).equals("")) {
+			nome = this.pessoaControler.getPessoa(this.atividadeControler.getResponsavel(atividadeId)).getNome();
+		}else {
+			nome = "";
+		}
+		
+		String atividade = this.atividadeControler.exibirAtividade(atividadeId,this.tarefaController.getTarefas(atividadeId), nome);
+		return atividade; 
 	}
 
 	public void alterarDescricaoAtividade(String atividadeId, String descricao) {
@@ -130,5 +151,70 @@ public class Facade {
 		this.tarefaController.removerPessoaTarefa(cpf, idTarefa);
 	}
 	
-	// Métodos para as classes relacionadas a Tarefas começam aqui.
+	// Métodos para as classes relacionadas a Tarefas terminam aqui.
+	
+	// Métodos para as classes relacionadas à Busca começam aqui
+	
+	public String[] exibirPessoas(String consulta) {
+		return this.buscar.buscarPessoas(consulta.split(" "), this.pessoaControler.getMetadadosPessoas());
+	}
+
+	public String[] buscarAtividade(String consulta) {
+		return this.buscar.buscarAtividades(consulta.split(" "), this.atividadeControler.getMetadados());
+	}
+
+	public String[] buscarTarefas(String nome) {
+		return this.buscar.buscarTarefas(nome, this.tarefaController.getMetadados());
+	}
+
+	public String[] buscarTarefas(String idAtividade, String nome) {
+		return this.buscar.buscarTarefas(idAtividade, nome, this.tarefaController.getMetadados());
+	} 
+
+	public String[] sugerirTarefas(String id) {
+		Pessoa pessoa = this.pessoaControler.getPessoa(id);
+		return this.buscar.sugerirTarefas(pessoa, this.tarefaController.getMetadadosHabilidades());
+	}
+
+	public String[] buscasMaisRecentes(int nBuscas) {
+		return this.buscar.buscasMaisRecentes(nBuscas);
+	}
+
+	public String[] exibirHistóricoBusca(int indexBusca) {
+		return this.buscar.exibirHistóricoBusca(indexBusca);
+	}
+	
+	// Métodos para as classes relacionadas à Busca terminam aqui
+	
+	// Métodos para as classes relacionadas à funções começam aqui
+	
+	public void cadastrarAluno(String cpf, String nome, String matr, String periodo, String[] habilidades) {
+		
+	}
+
+	public void cadastrarProfessor(String cpf, String nome, String siape, String[] disciplinas, String[] habilidades) {
+		
+	}
+
+	public void definirFuncaoProfessor(String cpf, String siape, String[] disciplinas) {
+		
+	}
+
+	public void definirFuncaoAluno(String cpf, String matr, String periodo) {
+		
+	}
+
+	public void removerFuncao(String cpf) {
+		
+	}
+
+	public int pegarNivel(String cpf) {
+		return 1;
+	}
+
+	public String[] listarPessoas() {
+		return this.x;
+	}
+			
+	// Métodos para as classes relacionadas à funções terminam aqui
 }

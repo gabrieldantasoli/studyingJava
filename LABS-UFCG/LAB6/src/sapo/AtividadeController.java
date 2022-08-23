@@ -1,5 +1,6 @@
 package sapo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AtividadeController {
@@ -33,10 +34,10 @@ public class AtividadeController {
 		atividade.reabrirAtividade();
 	}
 	
-	public String exibirAtividade(String atividadeId, HashMap<String, Tarefa> tarefas) {
+	public String exibirAtividade(String atividadeId, HashMap<String, Tarefa> tarefas, String responsavel) {
 		checkAtributo(atividadeId,"ID da atividade");
 		Atividade atividade = attRep.getAtividade(atividadeId);
-		return atividade.toString(tarefas);
+		return atividade.toString(tarefas, responsavel);
 	}
 	
 	public void alterarDescricaoAtividade(String atividadeId, String descricao) {
@@ -54,7 +55,7 @@ public class AtividadeController {
 	
 	private boolean checkAtributo(String atributo, String nomeAtributo) {
 		if (atributo.trim().equals("")) {
-			throw new IllegalArgumentException("O/A " + nomeAtributo.toUpperCase() + " da pessoa não pode ser vazio!");
+			throw new IllegalArgumentException("O/A " + nomeAtributo.toUpperCase() + " da atividade não pode ser vazio!");
 		}
 		
 		return true;
@@ -66,5 +67,16 @@ public class AtividadeController {
 	
 	public String getStatusTarefa(String atividadeId) {
 		return this.attRep.getAtividade(atividadeId).getStatus();
+	}
+	
+	public String getResponsavel(String atividadeId) {
+		if (this.attRep.getAtividade(atividadeId).getResponsavel().equals("")) {
+			return "";
+		}
+		return this.attRep.getAtividade(atividadeId).getResponsavel();
+	}
+	
+	public HashMap<String, ArrayList<String>> getMetadados() {
+		return this.attRep.getMetadados();
 	}
 }
